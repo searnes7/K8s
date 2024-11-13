@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo hostnamectl set-hostname “HOST NAME HERE” && exec bash
 
 echo '192.168.5.135 kmaster' >> /etc/hosts
 echo '192.168.5.136 kworker1' >> /etc/hosts
