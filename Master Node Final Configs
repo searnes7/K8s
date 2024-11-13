@@ -1,0 +1,22 @@
+—---------------------------------------------------------------------------------------------------------------------------------------------------------
+# EXIT OUT OF ROOT USER. MUST CONFIGURE THE FOLLOWING IN USER YOU WANT TO OPERATE FROM
+mkdir -p /home/kmaster/.kube
+sudo cp -i /etc/kubernetes/admin.conf /home/kmaster/.kube/config
+sudo chown $(id -u):$(id -g) /home/kmaster/.kube/config
+—---------------------------------------------------- Install Calico Networking —---------------------------------------------------------------
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+kubectl get pods -n kube-system
+kubectl get nodes
+------------------------------------------------------Change Node Roles ----------------------------------------------------------
+kubectl label nodes [node name] kubernetes.io/role=[role name]
+
+-------------------------------------------------------Test Deployment -----------------------------------------------------------
+kubectl create deployment web-app01 --image nginx --replicas 2
+kubectl expose deployment web-app01 --type NodePort --port 80
+kubectl get deployment web-app01
+kubectl get pods
+kubectl get svc web-app01
+
+
+curl k8s-worker01:31121
+curl (kworker IP address: port)
