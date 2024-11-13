@@ -1,10 +1,6 @@
-# sets hostname without restart?
-sudo hostnamectl set-hostname “k8s-master01” && exec bash
-
-
 #!/bin/bash
 
----------------------------------------------------------- Run from here to.. ------------------------------------------
+sudo hostnamectl set-hostname “HOST NAME HERE” && exec bash
 
 echo '192.168.5.135 kmaster' >> /etc/hosts
 echo '192.168.5.136 kworker1' >> /etc/hosts
@@ -72,30 +68,3 @@ systemctl enable --now kubelet
 
 
 kubeadm init
-
-
-—---------------------------------------------------------------- .....Here -----------------------------------------------------------------------------------------
-mkdir -p /home/kmaster/.kube
-sudo cp -i /etc/kubernetes/admin.conf /home/kmaster/.kube/config
-sudo chown $(id -u):$(id -g) /home/kmaster/.kube/config
-—---------------------------------------------------- Install Calico Networking —---------------------------------------------------------------
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
-kubectl get pods -n kube-system
-kubectl get nodes
-
-
-kubectl label nodes [node name] kubernetes.io/role=[role name]
-
-
-kubectl create deployment web-app01 --image nginx --replicas 2
-kubectl expose deployment web-app01 --type NodePort --port 80
-kubectl get deployment web-app01
-kubectl get pods
-kubectl get svc web-app01
-
-
-curl k8s-worker01:31121
-curl (kworker IP address: port)
-
-
-
